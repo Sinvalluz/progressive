@@ -7,7 +7,7 @@
 	},
 	"files": {
 		"ignoreUnknown": false,
-		"includes": ["**", "!node_modules", "!index.css"]
+		"includes": ["**", "!node_modules"]
 	},
 	"formatter": {
 		"enabled": true,
@@ -33,6 +33,11 @@
 			"bracketSpacing": true,
 			"bracketSameLine": false,
 			"quoteProperties": "asNeeded"
+		}
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
 		}
 	},
 	"assist": {
