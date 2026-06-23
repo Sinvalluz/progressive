@@ -20,6 +20,7 @@ export const createAppRouter = (queryClient: QueryClient) =>
 		{
 			path: paths.home.path,
 			lazy: () => import('./routes/home').then(convert(queryClient)),
+			HydrateFallback: () => {},
 		},
 		{
 			path: '*',
