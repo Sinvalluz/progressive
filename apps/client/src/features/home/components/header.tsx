@@ -1,21 +1,21 @@
-import { Menu } from 'lucide-react';
 import { Link } from 'react-router';
 import { ModeToggle } from '@/components/mode-toggle';
 import { NavLink } from '@/components/nav-link';
 import Logo from '@/components/ui/logo';
+import { SidebarTrigger } from '@/components/ui/sidebar';
 import { paths } from '@/config/path';
 
 export default function HomeHeader() {
 	return (
 		<header className='flex px-4 lg:px-20 h-18 items-center justify-between border-b border-b-border text-primary'>
-			<Menu
-				size={32}
+			<SidebarTrigger
 				className='cursor-pointer lg:hidden'
+				size={'icon-lg'}
 			/>
 			<Link to={paths.home.path}>
 				<Logo className='lg:size-16' />
 			</Link>
-			<div className='flex items-center gap-2'>
+			<nav className='flex items-center gap-2'>
 				<div className='hidden lg:flex items-center gap-2'>
 					<NavLink to={paths.home.path}>Início</NavLink>
 
@@ -31,7 +31,7 @@ export default function HomeHeader() {
 					</NavLink>
 				</div>
 				<ModeToggle />
-			</div>
+			</nav>
 		</header>
 	);
 }
