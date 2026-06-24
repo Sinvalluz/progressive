@@ -16,7 +16,7 @@ export default function HeroSection() {
 					<Link to={paths.home.path}>Começar gratuitamente</Link>
 				</Button>
 			</div>
-			<div className='min-w-96 border border-border h-100 lg:h-175 flex items-center justify-center text-6xl text-center rounded-4xl animate-up'>
+			<div className='w-full border border-border h-100 lg:h-175 flex items-center justify-center text-4xl lg:text-6xl text-center rounded-4xl animate-up'>
 				Tela de exemplo da dashboard
 			</div>
 		</section>

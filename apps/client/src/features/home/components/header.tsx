@@ -7,7 +7,7 @@ import { paths } from '@/config/path';
 
 export default function HomeHeader() {
 	return (
-		<header className='flex px-4 lg:px-20 h-18 items-center justify-between border-b border-b-border text-primary fixed top-0 left-0 right-0 z-50'>
+		<header className='flex px-4 lg:px-20 h-18 items-center justify-between border-b border-b-border text-primary fixed top-0 left-0 right-0 z-50 bg-background'>
 			<SidebarTrigger
 				className='cursor-pointer lg:hidden'
 				size={'icon-lg'}
