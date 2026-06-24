@@ -18,7 +18,7 @@ export default function AppProviders({ children }: AppProvidersProps) {
 
 	return (
 		<QueryClientProvider client={queryClient}>
-			<SidebarProvider>
+			<SidebarProvider defaultOpen={false}>
 				<ThemeProvider
 					defaultTheme='dark'
 					storageKey='vite-ui-theme'
