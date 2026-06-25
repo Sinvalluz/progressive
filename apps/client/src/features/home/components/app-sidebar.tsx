@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
 import { NavLink } from '@/components/nav-link';
-import Logo from '@/components/ui/logo';
+import LogoWithName from '@/components/ui/logo-with-name';
 import {
 	Sidebar,
 	SidebarContent,
@@ -34,8 +34,9 @@ export function AppSidebar() {
 			<SidebarHeader>
 				<SidebarMenu className='flex'>
 					<div className='flex px-2'>
-						<Logo className='h-8 w-auto' />
-						<span className='self-end text-3xl leading-5 text-primary'>rogressive</span>
+						{/* <Logo className='h-8 w-auto' />
+						<span className='self-end text-3xl leading-5 text-primary'>rogressive</span> */}
+						<LogoWithName className='text-white' />
 					</div>
 				</SidebarMenu>
 			</SidebarHeader>
