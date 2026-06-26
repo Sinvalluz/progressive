@@ -1,19 +1,27 @@
-const words = ['Evolução', 'Recordes', 'Cargas', 'Treinos', 'Metas', 'Estatísticas'];
-const repeated = [...words, ...words, ...words, ...words, ...words, ...words];
-
 export default function TextCarousel() {
 	return (
-		<section className='overflow-hidden w-full'>
-			<div className='flex w-max track gap-32'>
-				{repeated.map((word, i) => (
-					<span
-						// biome-ignore lint/suspicious/noArrayIndexKey: <No problem, config default>
-						key={i}
-						className='px-6 py-2 text-2xl text-foreground font-semibold whitespace-nowrap select-none'
-					>
-						{word}
-					</span>
-				))}
+		<section className='flex overflow-x-auto scrollbar-none'>
+			<div
+				className='flex items-center justify-center gap-16 lg:gap-52 animate-carousel pr-16 lg:pr-52'
+				aria-hidden
+			>
+				<div className='text-foreground font-semibold text-2xl'>Evolução</div>
+				<div className='text-foreground font-semibold text-2xl'>Recordes</div>
+				<div className='text-foreground font-semibold text-2xl'>Cargas</div>
+				<div className='text-foreground font-semibold text-2xl'>Treinos</div>
+				<div className='text-foreground font-semibold text-2xl'>Metas</div>
+				<div className='text-foreground font-semibold text-2xl'>Estatísticas</div>
+			</div>
+			<div
+				className='flex items-center justify-center gap-16 lg:gap-52 animate-carousel pr-16 lg:pr-52'
+				aria-hidden
+			>
+				<div className='text-foreground font-semibold text-2xl'>Evolução</div>
+				<div className='text-foreground font-semibold text-2xl'>Recordes</div>
+				<div className='text-foreground font-semibold text-2xl'>Cargas</div>
+				<div className='text-foreground font-semibold text-2xl'>Treinos</div>
+				<div className='text-foreground font-semibold text-2xl'>Metas</div>
+				<div className='text-foreground font-semibold text-2xl'>Estatísticas</div>
 			</div>
 		</section>
 	);

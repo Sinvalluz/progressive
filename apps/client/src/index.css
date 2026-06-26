@@ -7,18 +7,8 @@
 @custom-variant dark (&:is(.dark *));
 
 @theme inline {
+	--animate-carousel: carousel 20s infinite linear;
 	--font-heading: var(--font-sans);
-
-	--animate-marquee: marquee 20s linear infinite;
-
-	@keyframes marquee {
-		from {
-			transform: translateX(0);
-		}
-		to {
-			transform: translateX(-50%);
-		}
-	}
 	--font-sans: "Inter Variable", sans-serif;
 	--color-sidebar-ring: var(--sidebar-ring);
 	--color-sidebar-border: var(--sidebar-border);
@@ -69,7 +59,7 @@
 	--popover-foreground: oklch(0.145 0 0);
 	--primary: #151517;
 	--primary-foreground: oklch(0.985 0 0);
-	--secondary: oklch(0.97 0 0);
+	--secondary: #e5e5e6;
 	--secondary-foreground: #151517;
 	--muted: oklch(0.97 0 0);
 	--muted-foreground: oklch(0.556 0 0);
@@ -104,7 +94,7 @@
 	--popover-foreground: oklch(0.985 0 0);
 	--primary: #e5e5e6;
 	--primary-foreground: oklch(0.205 0 0);
-	--secondary: oklch(0.269 0 0);
+	--secondary: #151517;
 	--secondary-foreground: #8a8f98;
 	--muted: oklch(0.269 0 0);
 	--muted-foreground: oklch(0.708 0 0);
@@ -173,16 +163,11 @@
 	opacity: 0;
 }
 
-/* index.css */
-@keyframes scroll-left {
+@keyframes carousel {
 	0% {
-		transform: translateX(0);
+		transform: translate(0);
 	}
 	100% {
-		transform: translateX(-50%);
+		transform: translateX(-100%);
 	}
-}
-
-.track {
-	animation: scroll-left 120s linear infinite;
 }

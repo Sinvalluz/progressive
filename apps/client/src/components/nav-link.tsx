@@ -11,7 +11,10 @@ export function NavLink({ to, children, className }: NavLinkProps) {
 	return (
 		<Link
 			to={to}
-			className={cn('px-3 py-1.5 text-secondary-foreground text-sm', className)}
+			className={cn(
+				'px-3 py-1.5 text-secondary-foreground text-sm font-semibold hover:text-foreground transition',
+				className,
+			)}
 		>
 			{children}
 		</Link>
