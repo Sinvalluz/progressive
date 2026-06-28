@@ -4,7 +4,9 @@
 	"description": "",
 	"scripts": {
 		"format": "pnpx @biomejs/biome format --write . && pnpx @biomejs/biome check --write .",
-		"dev:client": "pnpm --filter @progressive/client dev"
+		"dev:client": "pnpm --filter @progressive/client dev",
+		"build:client": "pnpm --filter @progressive/client build",
+		"preview:client": "pnpm --filter @progressive/client preview "
 	},
 	"keywords": [],
 	"author": "",

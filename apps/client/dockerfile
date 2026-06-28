@@ -1,0 +1,15 @@
+FROM ghcr.io/pnpm/pnpm:11.8.0
+
+RUN pnpm runtime set node 24.17 -g
+
+WORKDIR /client
+
+COPY . .
+
+RUN pnpm install
+
+RUN pnpm build
+
+EXPOSE 5173
+
+CMD [ "pnpm", "preview" ]
