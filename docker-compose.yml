@@ -4,3 +4,19 @@ services:
     ports:
       - "5173:5173"
     restart: always
+
+  postgres: 
+    image: postgres:18.4-trixie
+    ports:
+      - "5432:5432"
+    environment:
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=123456
+      - POSTGRES_DB=progressive
+    restart: always
+    volumes:
+      - polls_pg_data:/var/lib/postgresql/18/docker
+
+
+volumes:
+  polls_pg_data:
