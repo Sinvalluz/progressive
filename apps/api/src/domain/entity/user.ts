@@ -1,8 +1,8 @@
-import { randomUUID, type UUID } from 'node:crypto';
+import { randomUUID } from 'node:crypto';
 
 export class User {
 	constructor(
-		readonly id: UUID,
+		readonly id: string,
 		readonly email: string,
 		readonly name: string,
 		readonly password: string,
