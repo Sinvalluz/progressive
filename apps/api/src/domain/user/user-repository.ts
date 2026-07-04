@@ -1,6 +1,6 @@
-import type { User } from '../entity/user.js';
+import type { User } from './user.js';
 
-export interface UserGateway {
+export interface UserRepository {
 	findByEmail(email: string): Promise<User | null>;
 	create(user: User): Promise<User>;
 }

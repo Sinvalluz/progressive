@@ -3,7 +3,7 @@ import fastifySwagger from '@fastify/swagger';
 import ScalarApiReference from '@scalar/fastify-api-reference';
 import fastify from 'fastify';
 import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
-import { authPlugin } from './infra/http/plugins/auth-plugin.js';
+import { RegisterPlugin } from './infra/http/plugins/register-plugin.js';
 
 function main() {
 	const app = fastify();
@@ -28,7 +28,7 @@ function main() {
 		transform: jsonSchemaTransform,
 	});
 
-	app.register(authPlugin);
+	app.register(RegisterPlugin);
 
 	app.register(ScalarApiReference, {
 		routePrefix: '/docs',

@@ -1,8 +1,7 @@
-import { User } from '../../domain/entity/user.js';
-import type { HashPasswordGateway } from '../../domain/gateway/hash-password-gateway.js';
-import type { UserGateway } from '../../domain/gateway/user-gateway.js';
-
-import { EmailIsAlreadyInUse } from '../erros/email-is-already-in-use.js';
+import { EmailIsAlreadyInUse } from '@/application/erros/email-is-already-in-use.js';
+import type { HashPasswordGateway } from '@/application/gateway/hash-password-gateway.js';
+import { User } from '@/domain/user/user.js';
+import type { UserRepository } from '@/domain/user/user-repository.js';
 import type { UseCase } from './use-case.js';
 
 export interface CreateUserInput {
@@ -22,7 +21,7 @@ export interface CreateUserOutput {
 
 export class CreateUser implements UseCase<CreateUserInput, CreateUserOutput> {
 	constructor(
-		private readonly userGateway: UserGateway,
+		private readonly userGateway: UserRepository,
 		private readonly hashPasswordGateway: HashPasswordGateway,
 	) {}
 

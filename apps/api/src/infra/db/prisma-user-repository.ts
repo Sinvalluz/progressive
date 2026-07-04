@@ -1,8 +1,8 @@
 import type { PrismaClient } from '../../../generated/prisma/client.js';
-import type { User } from '../../domain/entity/user.js';
-import type { UserGateway } from '../../domain/gateway/user-gateway.js';
+import type { User } from '../../domain/user/user.js';
+import type { UserRepository } from '../../domain/user/user-repository.js';
 
-export class PrismaUserGateway implements UserGateway {
+export class PrismaUserRepository implements UserRepository {
 	constructor(private readonly prismaClient: PrismaClient) {}
 
 	async findByEmail(email: string): Promise<User | null> {

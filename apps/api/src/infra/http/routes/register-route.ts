@@ -1,19 +1,20 @@
 import type { FastifyInstance } from 'fastify';
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
-import type { CreateUser } from '@/application/use-cases/create-user.js';
+import type { CreateUser } from '@/application/use-case/create-user.js';
+import { paths } from '@/infra/config/path.js';
 import { RegisterRequestSchema } from '../dto/register-request.js';
 import { RegisterResponseSchema } from '../dto/register-response.js';
 
-export class AuthRoute {
+export class RegisterRoute {
 	constructor(
 		private readonly fastify: FastifyInstance,
 		private readonly createUser: CreateUser,
 	) {}
 
-	async register() {
+	execute() {
 		this.fastify.withTypeProvider<ZodTypeProvider>().route({
 			method: 'POST',
-			url: '/auth/register',
+			url: paths.auth.register,
 			schema: {
 				body: RegisterRequestSchema,
 				response: {
