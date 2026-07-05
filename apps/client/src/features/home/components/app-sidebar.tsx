@@ -36,7 +36,7 @@ export function AppSidebar() {
 					<div className='flex px-2'>
 						{/* <Logo className='h-8 w-auto' />
 						<span className='self-end text-3xl leading-5 text-primary'>rogressive</span> */}
-						<LogoWithName className='text-white' />
+						<LogoWithName />
 					</div>
 				</SidebarMenu>
 			</SidebarHeader>
@@ -67,7 +67,7 @@ export function AppSidebar() {
 									asChild
 									className='bg-primary text-primary-foreground'
 								>
-									<NavLink to={paths.home.path}>Cadastro</NavLink>
+									<NavLink to={paths.auth.register.path}>Cadastro</NavLink>
 								</SidebarMenuButton>
 							</SidebarMenuItem>
 						</SidebarMenu>
