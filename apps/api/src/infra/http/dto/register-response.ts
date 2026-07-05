@@ -5,6 +5,7 @@ export const RegisterResponseSchema = z.object({
 	email: z.email(),
 	name: z.string(),
 	role: z.enum(['USER', 'ADMIN']),
+	imgUrl: z.string().nullable(),
 	createAt: z.date(),
 	updateAt: z.date(),
 });

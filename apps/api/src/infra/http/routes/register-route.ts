@@ -28,6 +28,7 @@ export class RegisterRoute {
 					name: body.name,
 					email: body.email,
 					password: body.password,
+					registrationToken: body.registrationToken,
 				});
 
 				return reply.status(201).send({
@@ -35,6 +36,7 @@ export class RegisterRoute {
 					name: user.name,
 					email: user.email,
 					role: user.role,
+					imgUrl: user.imgUrl,
 					createAt: user.createAt,
 					updateAt: user.updateAt,
 				});
