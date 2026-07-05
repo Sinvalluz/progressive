@@ -18,8 +18,14 @@ model User {
   name String
   password String
   role Role
+  imgUrl String?
   createAt DateTime
   updateAt DateTime
+}
+
+model RegistrationToken {
+  id String @id @default(uuid())
+  token String
 }
 
 enum Role {

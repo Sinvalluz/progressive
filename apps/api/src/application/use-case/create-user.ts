@@ -15,6 +15,7 @@ export interface CreateUserOutput {
 	email: string;
 	name: string;
 	role: 'USER' | 'ADMIN';
+	imgUrl: string | null;
 	createAt: Date;
 	updateAt: Date;
 }
@@ -43,6 +44,7 @@ export class CreateUser implements UseCase<CreateUserInput, CreateUserOutput> {
 			name: user.id,
 			email: user.email,
 			role: user.role,
+			imgUrl: user.imgUrl,
 			createAt: user.createdAt,
 			updateAt: user.updateAt,
 		};
