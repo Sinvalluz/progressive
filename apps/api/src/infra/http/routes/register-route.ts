@@ -24,33 +24,14 @@ export class RegisterRoute {
 			handler: async (request, reply) => {
 				const body = request.body;
 
-				const user = await this.createUser.execute({
+				const { user, token } = await this.createUser.execute({
 					name: body.name,
 					email: body.email,
 					password: body.password,
 					registrationToken: body.registrationToken,
 				});
 
-				const payload = {
-					id: user.id,
-					email: user.email,
-					name: user.name,
-				};
-
-				const token = this.fastify.jwt.sign(payload);
-
-				return reply.status(201).send({
-					token: token,
-					user: {
-						id: user.id,
-						name: user.name,
-						email: user.email,
-						role: user.role,
-						imgUrl: user.imgUrl,
-						createAt: user.createAt,
-						updateAt: user.updateAt,
-					},
-				});
+				return reply.status(201).send({ token, user });
 			},
 		});
 	}

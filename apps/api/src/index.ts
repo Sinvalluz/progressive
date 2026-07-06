@@ -5,6 +5,7 @@ import ScalarApiReference from '@scalar/fastify-api-reference';
 import fastify from 'fastify';
 import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 import { env } from './infra/config/env.js';
+import { LoginPlugin } from './infra/http/plugins/login-plugin.js';
 import { RegisterPlugin } from './infra/http/plugins/register-plugin.js';
 
 function main() {
@@ -38,6 +39,7 @@ function main() {
 	});
 
 	app.register(RegisterPlugin);
+	app.register(LoginPlugin);
 
 	app.register(ScalarApiReference, {
 		routePrefix: '/docs',

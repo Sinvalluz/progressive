@@ -4,6 +4,7 @@ import type { RegistrationTokenRepository } from '@/domain/registration-token/re
 import { User } from '@/domain/user/user.js';
 import type { UserRepository } from '@/domain/user/user-repository.js';
 import { InvalidRegistrationToken } from '../erros/invalid-registration-token.js';
+import type { TokenAuthenticationGateway } from '../gateway/token-authentication-gateway.js';
 import type { UseCase } from './use-case.js';
 
 export interface CreateUserInput {
@@ -14,13 +15,22 @@ export interface CreateUserInput {
 }
 
 export interface CreateUserOutput {
+	token: string;
+	user: {
+		id: string;
+		email: string;
+		name: string;
+		role: 'USER' | 'ADMIN';
+		imgUrl: string | null;
+		createAt: Date;
+		updateAt: Date;
+	};
+}
+
+interface TokenPayload {
 	id: string;
 	email: string;
 	name: string;
-	role: 'USER' | 'ADMIN';
-	imgUrl: string | null;
-	createAt: Date;
-	updateAt: Date;
 }
 
 export class CreateUser implements UseCase<CreateUserInput, CreateUserOutput> {
@@ -28,6 +38,7 @@ export class CreateUser implements UseCase<CreateUserInput, CreateUserOutput> {
 		private readonly userGateway: UserRepository,
 		private readonly registrationTokenRepository: RegistrationTokenRepository,
 		private readonly hashPasswordGateway: HashPasswordGateway,
+		private readonly tokenAuthenticationGateway: TokenAuthenticationGateway<TokenPayload>,
 	) {}
 
 	async execute(createUserInput: CreateUserInput): Promise<CreateUserOutput> {
@@ -49,14 +60,23 @@ export class CreateUser implements UseCase<CreateUserInput, CreateUserOutput> {
 			User.create(createUserInput.email, createUserInput.name, hashedPassword),
 		);
 
-		return {
-			id: user.id,
-			name: user.id,
+		const token = this.tokenAuthenticationGateway.sign({
 			email: user.email,
-			role: user.role,
-			imgUrl: user.imgUrl,
-			createAt: user.createdAt,
-			updateAt: user.updateAt,
+			id: user.id,
+			name: user.name,
+		});
+
+		return {
+			token: token,
+			user: {
+				id: user.id,
+				email: user.email,
+				name: user.name,
+				role: user.role,
+				imgUrl: user.imgUrl,
+				createAt: user.createdAt,
+				updateAt: user.updateAt,
+			},
 		};
 	}
 }

@@ -1,8 +1,6 @@
 import z from 'zod';
 
-export const RegisterRequestSchema = z.object({
-	name: z.string().min(1, 'O nome é obrigatório.'),
+export const LoginRequestSchema = z.object({
 	email: z.email('O e-mail é obrigatório.'),
 	password: z.string().min(1, 'A senha é obrigatória.').min(6, 'A senha deve ter pelo menos 6 caracteres.'),
-	registrationToken: z.string().min(1, 'O token de registro é obrigatório.'),
 });
