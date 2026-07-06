@@ -1,8 +1,10 @@
 import { fastifyCors } from '@fastify/cors';
+import jwt from '@fastify/jwt';
 import fastifySwagger from '@fastify/swagger';
 import ScalarApiReference from '@scalar/fastify-api-reference';
 import fastify from 'fastify';
 import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
+import { env } from './infra/config/env.js';
 import { RegisterPlugin } from './infra/http/plugins/register-plugin.js';
 
 function main() {
@@ -26,6 +28,12 @@ function main() {
 			servers: [],
 		},
 		transform: jsonSchemaTransform,
+	});
+	app.register(jwt, {
+		secret: env.JWT_SECRET,
+		sign: {
+			expiresIn: '7d',
+		},
 	});
 
 	app.register(RegisterPlugin);

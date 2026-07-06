@@ -31,14 +31,25 @@ export class RegisterRoute {
 					registrationToken: body.registrationToken,
 				});
 
-				return reply.status(201).send({
+				const payload = {
 					id: user.id,
-					name: user.name,
 					email: user.email,
-					role: user.role,
-					imgUrl: user.imgUrl,
-					createAt: user.createAt,
-					updateAt: user.updateAt,
+					name: user.name,
+				};
+
+				const token = this.fastify.jwt.sign(payload);
+
+				return reply.status(201).send({
+					token: token,
+					user: {
+						id: user.id,
+						name: user.name,
+						email: user.email,
+						role: user.role,
+						imgUrl: user.imgUrl,
+						createAt: user.createAt,
+						updateAt: user.updateAt,
+					},
 				});
 			},
 		});
