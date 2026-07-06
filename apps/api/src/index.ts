@@ -14,8 +14,9 @@ function main() {
 	app.setSerializerCompiler(serializerCompiler);
 
 	app.register(fastifyCors, {
-		origin: true,
+		origin: ['http://localhost:5174'],
 		methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
+		credentials: true,
 	});
 
 	app.register(fastifySwagger, {
