@@ -1,4 +1,4 @@
-import AuthFooter from '@/features/auth/components/footer';
+import AuthHeader from '@/features/auth/components/header';
 import RegisterMain from '@/features/auth/register/components/main';
 
 export default function RegisterRouter() {
@@ -11,9 +11,9 @@ export default function RegisterRouter() {
 					className='h-full w-full object-cover object-[0%_center]'
 				/>
 			</div>
-			<section className='p-4 flex lg:w-112.5 flex-col h-screen'>
+			<section className='p-4 flex lg:w-112.5 flex-col h-full justify-between overflow-y-auto'>
+				<AuthHeader />
 				<RegisterMain />
-				<AuthFooter />
 			</section>
 		</div>
 	);

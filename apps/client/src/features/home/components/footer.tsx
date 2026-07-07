@@ -4,7 +4,7 @@ export default function HomeFooter() {
 	return (
 		<footer className='border-t-2 border-border py-16 px-4 flex flex-col gap-12 lg:flex-row justify-between lg:items-center lg:px-28'>
 			<div className='lg:max-w-50'>
-				<LogoWithName />
+				<LogoWithName className='text-primary' />
 				<p className='text-secondary-foreground'>
 					Acompanhe sua evolução na academia através de registros de cargas, histórico de treinos e métricas
 					de desempenho.

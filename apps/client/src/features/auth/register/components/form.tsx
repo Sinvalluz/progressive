@@ -2,7 +2,7 @@ import { zodResolver } from '@hookform/resolvers/zod';
 import { useMutation } from '@tanstack/react-query';
 import type { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
-import { Link, useNavigate } from 'react-router';
+import { useNavigate } from 'react-router';
 import { Button } from '@/components/ui/button';
 import { Spinner } from '@/components/ui/spinner';
 import { paths } from '@/config/path';
@@ -42,50 +42,48 @@ export default function Form() {
 	return (
 		<form
 			onSubmit={form.handleSubmit(onSubmit)}
-			className='space-y-2'
+			className='space-y-6'
 		>
-			<div className='space-y-3'>
-				<HookFormController
-					label='Nome de usuário'
-					name='name'
-					control={form.control}
-					placeholder='Sinval Luz'
-					type='text'
-					maxLength={50}
-				/>
-				<HookFormController
-					label='Email'
-					name='email'
-					control={form.control}
-					placeholder='sinval@email.com'
-					type='email'
-					maxLength={100}
-				/>
-				<HookFormController
-					label='Senha'
-					name='password'
-					control={form.control}
-					placeholder='••••••••'
-					type='password'
-					maxLength={100}
-				/>
-				<HookFormController
-					label='Confirmação de senha'
-					name='confirmPassword'
-					control={form.control}
-					placeholder='••••••••'
-					type='password'
-					maxLength={100}
-				/>
-				<HookFormController
-					label='Token de cadastro'
-					name='registrationToken'
-					control={form.control}
-					placeholder='x3C908lxKyQ9'
-					type='text'
-					maxLength={100}
-				/>
-			</div>
+			<HookFormController
+				label='Nome de usuário'
+				name='name'
+				control={form.control}
+				placeholder='Seu nome'
+				type='text'
+				maxLength={50}
+			/>
+			<HookFormController
+				label='Email'
+				name='email'
+				control={form.control}
+				placeholder='email@exemplo.com'
+				type='email'
+				maxLength={100}
+			/>
+			<HookFormController
+				label='Senha'
+				name='password'
+				control={form.control}
+				placeholder='••••••••'
+				type='password'
+				maxLength={100}
+			/>
+			<HookFormController
+				label='Confirmação de senha'
+				name='confirmPassword'
+				control={form.control}
+				placeholder='••••••••'
+				type='password'
+				maxLength={100}
+			/>
+			<HookFormController
+				label='Token de cadastro'
+				name='registrationToken'
+				control={form.control}
+				placeholder='Insira o token de cadastro'
+				type='text'
+				maxLength={100}
+			/>
 
 			{registering.isError && (
 				<p className='text-red-500 text-sm'>
@@ -96,20 +94,10 @@ export default function Form() {
 
 			<Button
 				type='submit'
-				className='w-full p-4 h-auto font-bold cursor-pointer mt-2'
+				className='w-full p-4 h-auto font-bold cursor-pointer mt-2 bg-highlights text-white hover:bg-highlights/80 shadow-md'
 			>
 				{registering.isPending ? <Spinner /> : 'Criar conta'}
 			</Button>
-
-			<p className='text-end text-secondary-foreground text-sm'>
-				Já tem uma conta?{' '}
-				<Link
-					to={paths.home.path}
-					className='text-foreground font-bold'
-				>
-					Entrar
-				</Link>
-			</p>
 		</form>
 	);
 }

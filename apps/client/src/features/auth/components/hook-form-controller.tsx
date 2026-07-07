@@ -43,8 +43,8 @@ export default function HookFormController<T extends FieldValues>({
 							id={field.name}
 							aria-invalid={fieldState.invalid}
 							placeholder={placeholder}
-							className='border-border'
-							autoComplete='off'
+							className='border-border h-auto p-4 focus-visible:ring-ring'
+							autoComplete='on'
 							maxLength={maxLength}
 							type={inputType}
 						/>

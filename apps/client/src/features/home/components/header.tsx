@@ -32,7 +32,7 @@ export default function HomeHeader() {
 				size={'icon-lg'}
 			/>
 			<Link to={paths.home.path}>
-				{toggleLogo ? <LogoWithName /> : <Logo className='lg:size-16' />}
+				{toggleLogo ? <LogoWithName className='text-primary' /> : <Logo className='lg:size-16 text-primary' />}
 				<h1 hidden>Progressive</h1>
 			</Link>
 			<nav className='flex items-center gap-2'>
@@ -44,7 +44,7 @@ export default function HomeHeader() {
 					<NavLink to={paths.home.path}>Login</NavLink>
 
 					<Link to={paths.auth.register.path}>
-						<Button className='cursor-pointer font-semibold rounded-2xl text-secondary bg-primary px-3'>
+						<Button className='cursor-pointer font-semibold rounded-2xl bg-highlights hover:bg-highlights/70 text-white px-3'>
 							Cadastro
 						</Button>
 					</Link>
