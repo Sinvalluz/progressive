@@ -58,7 +58,7 @@ export function AppSidebar() {
 
 							<SidebarMenuItem>
 								<SidebarMenuButton asChild>
-									<NavLink to={paths.home.path}>Login</NavLink>
+									<NavLink to={paths.auth.signIn.path}>Login</NavLink>
 								</SidebarMenuButton>
 							</SidebarMenuItem>
 
@@ -67,7 +67,7 @@ export function AppSidebar() {
 									asChild
 									className='bg-primary text-primary-foreground'
 								>
-									<NavLink to={paths.auth.register.path}>Cadastro</NavLink>
+									<NavLink to={paths.auth.signUp.path}>Cadastro</NavLink>
 								</SidebarMenuButton>
 							</SidebarMenuItem>
 						</SidebarMenu>

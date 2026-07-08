@@ -15,7 +15,17 @@ function main() {
 	app.setSerializerCompiler(serializerCompiler);
 
 	app.register(fastifyCors, {
-		origin: ['http://localhost:5174'],
+		origin: (origin, cb) => {
+			if (!origin) return;
+			const hostname = new URL(origin).hostname;
+			if (hostname === 'localhost') {
+				//  Request from localhost will pass
+				cb(null, true);
+				return;
+			}
+			// Generate an error on other origins, disabling access
+			cb(new Error('Not allowed'), false);
+		},
 		methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
 		credentials: true,
 	});

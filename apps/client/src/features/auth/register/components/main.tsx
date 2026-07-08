@@ -15,8 +15,8 @@ export default function RegisterMain() {
 			<p className='text-end text-secondary-foreground text-sm'>
 				Já tem uma conta?{' '}
 				<Link
-					to={paths.home.path}
-					className='text-foreground font-bold'
+					to={paths.auth.signIn.path}
+					className='text-highlights font-bold'
 				>
 					Entrar
 				</Link>

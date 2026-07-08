@@ -13,7 +13,7 @@ export default function HeroSection() {
 					Registre cargas, organize seus treinos e visualize seu progresso físico em um único lugar.
 				</p>
 				<Button className='rounded-full px-5 py-2.5 bg-highlights hover:bg-highlights/70 text-white '>
-					<Link to={paths.home.path}>Começar gratuitamente</Link>
+					<Link to={paths.auth.signUp.path}>Começar gratuitamente</Link>
 				</Button>
 			</div>
 			<div className='w-full border border-border h-100 lg:h-175 flex items-center justify-center text-4xl lg:text-6xl text-center rounded-4xl animate-up'>

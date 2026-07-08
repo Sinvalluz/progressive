@@ -165,7 +165,7 @@
 }
 
 .animate-up {
-	animation: slideInUp 0.7s ease-out 0.2s forwards;
+	animation: slideInUp 500ms ease-out 0.1s forwards;
 	opacity: 0;
 }
 

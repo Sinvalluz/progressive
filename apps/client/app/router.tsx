@@ -23,13 +23,18 @@ export const createAppRouter = (queryClient: QueryClient) =>
 			HydrateFallback: () => {},
 		},
 		{
-			path: '*',
-			lazy: () => import('./routes/not-found').then(convert(queryClient)),
+			path: paths.auth.signUp.path,
+			lazy: () => import('./routes/auth/register').then(convert(queryClient)),
 			HydrateFallback: () => {},
 		},
 		{
-			path: paths.auth.register.path,
-			lazy: () => import('./routes/auth/register').then(convert(queryClient)),
+			path: paths.auth.signIn.path,
+			lazy: () => import('./routes/auth/login').then(convert(queryClient)),
+			HydrateFallback: () => {},
+		},
+		{
+			path: '*',
+			lazy: () => import('./routes/not-found').then(convert(queryClient)),
 			HydrateFallback: () => {},
 		},
 	]);

@@ -4,28 +4,26 @@ import type { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { Button } from '@/components/ui/button';
+import { Checkbox } from '@/components/ui/checkbox';
 import { Spinner } from '@/components/ui/spinner';
 import { paths } from '@/config/path';
 import HookFormController from '../../components/hook-form-controller';
-import { registerRequest } from '../services/register-request';
-import { type RegisterFormData, RegisterFormSchema } from '../types/register-request-type';
+import { LoginRequest } from '../services/login-request';
+import { type LoginFormData, LoginFormSchema } from '../types/login-request-type';
 
-export default function RegisterForm() {
-	const form = useForm<RegisterFormData>({
-		resolver: zodResolver(RegisterFormSchema),
+export default function LoginForm() {
+	const form = useForm<LoginFormData>({
+		resolver: zodResolver(LoginFormSchema),
 		defaultValues: {
-			name: '',
 			email: '',
 			password: '',
-			confirmPassword: '',
-			registrationToken: '',
 		},
 	});
 
 	const navigate = useNavigate();
 
 	const registering = useMutation({
-		mutationFn: registerRequest,
+		mutationFn: LoginRequest,
 		onSuccess: (data) => {
 			navigate(paths.home.getHref());
 			console.log(data);
@@ -35,7 +33,7 @@ export default function RegisterForm() {
 		},
 	});
 
-	function onSubmit(data: RegisterFormData) {
+	function onSubmit(data: LoginFormData) {
 		registering.mutate(data);
 		// form.reset();
 	}
@@ -44,14 +42,6 @@ export default function RegisterForm() {
 			onSubmit={form.handleSubmit(onSubmit)}
 			className='space-y-4'
 		>
-			<HookFormController
-				label='Nome de usuário'
-				name='name'
-				control={form.control}
-				placeholder='Seu nome'
-				type='text'
-				maxLength={50}
-			/>
 			<HookFormController
 				label='Email'
 				name='email'
@@ -68,22 +58,6 @@ export default function RegisterForm() {
 				type='password'
 				maxLength={100}
 			/>
-			<HookFormController
-				label='Confirmação de senha'
-				name='confirmPassword'
-				control={form.control}
-				placeholder='••••••••'
-				type='password'
-				maxLength={100}
-			/>
-			<HookFormController
-				label='Token de cadastro'
-				name='registrationToken'
-				control={form.control}
-				placeholder='Insira o token de cadastro'
-				type='text'
-				maxLength={100}
-			/>
 
 			{registering.isError && (
 				<p className='text-red-500 text-sm'>
@@ -92,11 +66,16 @@ export default function RegisterForm() {
 				</p>
 			)}
 
+			<div className='flex items-center gap-2.5'>
+				<Checkbox className='border-border data-checked:border-highlights data-checked:bg-highlights data-checked:text-white	 dark:data-checked:bg-highlights' />
+				<p className='font-medium text-[16px]'>Mantenha-me conectado</p>
+			</div>
+
 			<Button
 				type='submit'
 				className='w-full p-4 h-auto font-bold cursor-pointer mt-2 bg-highlights text-white hover:bg-highlights/80 shadow-md'
 			>
-				{registering.isPending ? <Spinner /> : 'Criar conta'}
+				{registering.isPending ? <Spinner /> : 'Entrar'}
 			</Button>
 		</form>
 	);

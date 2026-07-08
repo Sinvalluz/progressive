@@ -45,9 +45,9 @@ export default function HomeHeader() {
 
 					<NavLink to={paths.home.path}>Sobre</NavLink>
 					<div className='bg-border h-6 w-0.5 '></div>
-					<NavLink to={paths.home.path}>Login</NavLink>
+					<NavLink to={paths.auth.signIn.path}>Login</NavLink>
 
-					<Link to={paths.auth.register.path}>
+					<Link to={paths.auth.signUp.path}>
 						<Button className='cursor-pointer font-semibold rounded-2xl bg-highlights hover:bg-highlights/70 text-white px-3'>
 							Cadastro
 						</Button>
