@@ -30,7 +30,7 @@ export function AppSidebar() {
 		return () => window.removeEventListener('resize', handleResize);
 	}, [setOpen]);
 	return (
-		<Sidebar>
+		<Sidebar collapsible='offcanvas'>
 			<SidebarHeader>
 				<SidebarMenu className='flex'>
 					<div className='flex px-2'>

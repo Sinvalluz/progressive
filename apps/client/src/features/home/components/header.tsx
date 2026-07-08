@@ -26,13 +26,17 @@ export default function HomeHeader() {
 		return () => window.removeEventListener('resize', handleResize);
 	}, []);
 	return (
-		<header className='flex px-4 lg:px-20 h-18 items-center justify-between border-b border-b-border text-primary fixed top-0 left-0 right-0 z-50 bg-background'>
+		<header className='sticky top-0 z-50 flex h-18 items-center justify-between border-b border-border bg-background px-4 lg:px-20'>
 			<SidebarTrigger
 				className='cursor-pointer lg:hidden'
 				size={'icon-lg'}
 			/>
 			<Link to={paths.home.path}>
-				{toggleLogo ? <LogoWithName className='text-primary' /> : <Logo className='lg:size-16 text-primary' />}
+				{toggleLogo ? (
+					<LogoWithName className='text-primary' />
+				) : (
+					<Logo className='lg:size-16 size-16 text-primary' />
+				)}
 				<h1 hidden>Progressive</h1>
 			</Link>
 			<nav className='flex items-center gap-2'>
