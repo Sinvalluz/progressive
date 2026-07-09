@@ -1,6 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
-import type { CreateUser } from '@/application/use-case/create-user.js';
+import type { RegisterUser } from '@/application/use-case/register-user.js';
 import { paths } from '@/infra/config/path.js';
 import { RegisterRequestSchema } from '../dto/register-request.js';
 import { RegisterResponseSchema } from '../dto/register-response.js';
@@ -8,7 +8,7 @@ import { RegisterResponseSchema } from '../dto/register-response.js';
 export class RegisterRoute {
 	constructor(
 		private readonly fastify: FastifyInstance,
-		private readonly createUser: CreateUser,
+		private readonly RegisterUser: RegisterUser,
 	) {}
 
 	execute() {
@@ -24,14 +24,22 @@ export class RegisterRoute {
 			handler: async (request, reply) => {
 				const body = request.body;
 
-				const { user, token } = await this.createUser.execute({
+				const { token } = await this.RegisterUser.execute({
 					name: body.name,
 					email: body.email,
 					password: body.password,
 					registrationToken: body.registrationToken,
 				});
 
-				return reply.status(201).send({ token, user });
+				return reply
+					.setCookie('token', token, {
+						path: '/',
+						secure: true,
+						httpOnly: true,
+						sameSite: true,
+					})
+					.code(201)
+					.send();
 			},
 		});
 	}

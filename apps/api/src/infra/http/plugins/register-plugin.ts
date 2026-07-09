@@ -1,5 +1,6 @@
 import type { FastifyInstance } from 'fastify';
 import { CreateUser } from '@/application/use-case/create-user.js';
+import { RegisterUser } from '@/application/use-case/register-user.js';
 import { prisma } from '@/infra/db/prisma.js';
 import { prismaRegistrationTokenRepository } from '@/infra/db/prisma-registration-token-repository.js';
 import { PrismaUserRepository } from '@/infra/db/prisma-user-repository.js';
@@ -13,7 +14,9 @@ export async function RegisterPlugin(app: FastifyInstance) {
 	const hashGateway = new ByCryptGateway();
 	const jwtGateway = new JwtGateway(app);
 
-	const createUser = new CreateUser(userRepository, registrationTokenRepository, hashGateway, jwtGateway);
+	const createUser = new CreateUser(userRepository, hashGateway);
 
-	new RegisterRoute(app, createUser).execute();
+	const registerUser = new RegisterUser(jwtGateway, createUser, registrationTokenRepository);
+
+	new RegisterRoute(app, registerUser).execute();
 }

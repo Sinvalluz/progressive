@@ -1,3 +1,4 @@
+import fastifyCookie from '@fastify/cookie';
 import { fastifyCors } from '@fastify/cors';
 import jwt from '@fastify/jwt';
 import fastifySwagger from '@fastify/swagger';
@@ -15,20 +16,12 @@ function main() {
 	app.setSerializerCompiler(serializerCompiler);
 
 	app.register(fastifyCors, {
-		origin: (origin, cb) => {
-			if (!origin) return;
-			const hostname = new URL(origin).hostname;
-			if (hostname === 'localhost') {
-				//  Request from localhost will pass
-				cb(null, true);
-				return;
-			}
-			// Generate an error on other origins, disabling access
-			cb(new Error('Not allowed'), false);
-		},
+		origin: true,
 		methods: ['GET', 'POST', 'PUT', 'PATCH', 'DELETE', 'OPTIONS'],
 		credentials: true,
 	});
+
+	app.register(fastifyCookie);
 
 	app.register(fastifySwagger, {
 		openapi: {
@@ -43,9 +36,7 @@ function main() {
 	});
 	app.register(jwt, {
 		secret: env.JWT_SECRET,
-		sign: {
-			expiresIn: '7d',
-		},
+		sign: { expiresIn: '20s' },
 	});
 
 	app.register(RegisterPlugin);
