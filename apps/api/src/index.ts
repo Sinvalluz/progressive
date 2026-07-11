@@ -21,6 +21,11 @@ function main() {
 		credentials: true,
 	});
 
+	app.register(jwt, {
+		secret: env.JWT_SECRET,
+		cookie: { cookieName: 'refreshToken', signed: true },
+	});
+
 	app.register(fastifyCookie);
 
 	app.register(fastifySwagger, {
@@ -33,10 +38,6 @@ function main() {
 			servers: [],
 		},
 		transform: jsonSchemaTransform,
-	});
-	app.register(jwt, {
-		secret: env.JWT_SECRET,
-		sign: { expiresIn: '20s' },
 	});
 
 	app.register(RegisterPlugin);

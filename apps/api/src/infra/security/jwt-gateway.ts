@@ -7,11 +7,11 @@ interface TokenPayload {
 	name: string;
 }
 
-export class JwtGateway implements TokenAuthenticationGateway<TokenPayload> {
+export class JwtGateway implements TokenAuthenticationGateway {
 	constructor(private readonly fastify: FastifyInstance) {}
 
-	sign(payload: TokenPayload): string {
-		return this.fastify.jwt.sign(payload);
+	sign(payload: TokenPayload, options?: { expiresIn: string | number }): string {
+		return this.fastify.jwt.sign(payload, { expiresIn: options?.expiresIn });
 	}
 	verify(token: string): TokenPayload {
 		return this.fastify.jwt.verify(token);

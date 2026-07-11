@@ -4,6 +4,6 @@ interface TokenPayload {
 	name: string;
 }
 export interface TokenAuthenticationGateway {
-	sign(payload: TokenPayload): string;
+	sign(payload: TokenPayload, options?: { expiresIn: string | number }): string;
 	verify(token: string): TokenPayload;
 }

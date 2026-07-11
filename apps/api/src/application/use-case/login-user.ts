@@ -1,6 +1,9 @@
+import { RefreshToken } from '@/domain/refresh-token/refresh-token.js';
+import type { RefreshTokenRepository } from '@/domain/refresh-token/refresh-token-repository.js';
 import type { UserRepository } from '@/domain/user/user-repository.js';
 import { InvalidCredentialsError } from '../erros/invalid-credentials.js';
 import type { HashPasswordGateway } from '../gateway/hash-password-gateway.js';
+import type { HashRefreshTokenGateway } from '../gateway/hash-refresh-token-gateway.js';
 import type { TokenAuthenticationGateway } from '../gateway/token-authentication-gateway.js';
 import type { UseCase } from './use-case.js';
 
@@ -10,7 +13,8 @@ export interface LoginUserInput {
 }
 
 export interface LoginUserOutput {
-	token: string;
+	accessToken: string;
+	refreshToken: string;
 }
 
 export class LoginUser implements UseCase<LoginUserInput, LoginUserOutput> {
@@ -18,6 +22,8 @@ export class LoginUser implements UseCase<LoginUserInput, LoginUserOutput> {
 		private readonly userRepository: UserRepository,
 		private readonly hashPasswordGateway: HashPasswordGateway,
 		private readonly tokenAuthenticationGateway: TokenAuthenticationGateway,
+		private readonly refreshTokenRepository: RefreshTokenRepository,
+		private readonly hashRefreshTokenGateway: HashRefreshTokenGateway,
 	) {}
 
 	async execute(loginUserInput: LoginUserInput): Promise<LoginUserOutput> {
@@ -33,12 +39,26 @@ export class LoginUser implements UseCase<LoginUserInput, LoginUserOutput> {
 			throw new InvalidCredentialsError();
 		}
 
-		const token = this.tokenAuthenticationGateway.sign({
-			email: user.email,
-			id: user.id,
-			name: user.name,
-		});
+		const accessToken = this.tokenAuthenticationGateway.sign(
+			{
+				email: user.email,
+				id: user.id,
+				name: user.name,
+			},
+			{ expiresIn: '20s' },
+		);
 
-		return { token };
+		const refreshTokenJwt = this.tokenAuthenticationGateway.sign(
+			{ email: user.email, id: user.id, name: user.name },
+			{ expiresIn: '7d' },
+		);
+
+		const hashRefreshToken = this.hashRefreshTokenGateway.hash(refreshTokenJwt);
+
+		const { refreshToken } = await this.refreshTokenRepository.create(
+			RefreshToken.create(hashRefreshToken, user.id),
+		);
+
+		return { accessToken, refreshToken };
 	}
 }

@@ -23,20 +23,20 @@ export class LoginRoute {
 			handler: async (request, reply) => {
 				const body = request.body;
 
-				const { token } = await this.loginUser.execute({
+				const { accessToken, refreshToken } = await this.loginUser.execute({
 					email: body.email,
 					password: body.password,
 				});
 
 				return reply
-					.setCookie('token', token, {
+					.setCookie('refreshToken', refreshToken, {
 						path: '/',
 						secure: true,
 						httpOnly: true,
-						sameSite: true,
+						sameSite: 'lax',
 					})
 					.code(200)
-					.send();
+					.send({ accessToken });
 			},
 		});
 	}

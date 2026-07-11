@@ -24,7 +24,7 @@ export class RegisterRoute {
 			handler: async (request, reply) => {
 				const body = request.body;
 
-				const { token } = await this.RegisterUser.execute({
+				const { accessToken, refreshToken } = await this.RegisterUser.execute({
 					name: body.name,
 					email: body.email,
 					password: body.password,
@@ -32,14 +32,14 @@ export class RegisterRoute {
 				});
 
 				return reply
-					.setCookie('token', token, {
+					.setCookie('refreshToken', refreshToken, {
 						path: '/',
 						secure: true,
 						httpOnly: true,
-						sameSite: true,
+						sameSite: 'lax',
 					})
 					.code(201)
-					.send();
+					.send({ accessToken });
 			},
 		});
 	}

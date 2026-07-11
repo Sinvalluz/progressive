@@ -23,12 +23,12 @@ export interface CreateUserOutput {
 
 export class CreateUser implements UseCase<CreateUserInput, CreateUserOutput> {
 	constructor(
-		private readonly userGateway: UserRepository,
+		private readonly userRepository: UserRepository,
 		private readonly hashPasswordGateway: HashPasswordGateway,
 	) {}
 
 	async execute(createUserInput: CreateUserInput): Promise<CreateUserOutput> {
-		const userExist = await this.userGateway.findByEmail(createUserInput.email);
+		const userExist = await this.userRepository.findByEmail(createUserInput.email);
 
 		if (userExist) {
 			throw new EmailIsAlreadyInUse();
@@ -36,7 +36,7 @@ export class CreateUser implements UseCase<CreateUserInput, CreateUserOutput> {
 
 		const hashedPassword = await this.hashPasswordGateway.hash(createUserInput.password);
 
-		const user = await this.userGateway.create(
+		const user = await this.userRepository.create(
 			User.create(createUserInput.email, createUserInput.name, hashedPassword),
 		);
 
