@@ -9,7 +9,7 @@ export class User {
 		readonly role: 'USER' | 'ADMIN',
 		readonly imgUrl: string | null,
 		readonly createdAt: Date,
-		readonly updateAt: Date,
+		readonly updatedAt: Date,
 	) {}
 
 	static create(email: string, name: string, password: string): User {

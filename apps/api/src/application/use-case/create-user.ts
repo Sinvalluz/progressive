@@ -4,22 +4,14 @@ import { User } from '@/domain/user/user.js';
 import type { UserRepository } from '@/domain/user/user-repository.js';
 import type { UseCase } from './use-case.js';
 
-export interface CreateUserInput {
+export type CreateUserInput = {
 	email: string;
 	name: string;
 	password: string;
 	registrationToken: string;
-}
+};
 
-export interface CreateUserOutput {
-	id: string;
-	email: string;
-	name: string;
-	role: 'USER' | 'ADMIN';
-	imgUrl: string | null;
-	createAt: Date;
-	updateAt: Date;
-}
+export type CreateUserOutput = Omit<User, 'password'>;
 
 export class CreateUser implements UseCase<CreateUserInput, CreateUserOutput> {
 	constructor(
@@ -46,8 +38,8 @@ export class CreateUser implements UseCase<CreateUserInput, CreateUserOutput> {
 			name: user.name,
 			role: user.role,
 			imgUrl: user.imgUrl,
-			createAt: user.createdAt,
-			updateAt: user.updateAt,
+			createdAt: user.createdAt,
+			updatedAt: user.updatedAt,
 		};
 	}
 }

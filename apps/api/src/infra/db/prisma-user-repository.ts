@@ -4,6 +4,26 @@ import type { UserRepository } from '../../domain/user/user-repository.js';
 
 export class PrismaUserRepository implements UserRepository {
 	constructor(private readonly prismaClient: PrismaClient) {}
+	async findById(id: string): Promise<User | null> {
+		const user = await this.prismaClient.user.findUnique({
+			where: {
+				id,
+			},
+		});
+
+		if (!user) return null;
+
+		return new User(
+			user.id,
+			user.email,
+			user.name,
+			user.password,
+			user.role,
+			user.imgUrl,
+			user.createdAt,
+			user.updatedAt,
+		);
+	}
 
 	async findByEmail(email: string): Promise<User | null> {
 		const user = await this.prismaClient.user.findUnique({
@@ -21,8 +41,8 @@ export class PrismaUserRepository implements UserRepository {
 			user.password,
 			user.role,
 			user.imgUrl,
-			user.createAt,
-			user.updateAt,
+			user.createdAt,
+			user.updatedAt,
 		);
 	}
 	async create(user: User): Promise<User> {
@@ -33,8 +53,8 @@ export class PrismaUserRepository implements UserRepository {
 				name: user.name,
 				password: user.password,
 				role: user.role,
-				createAt: user.createdAt,
-				updateAt: user.updateAt,
+				createdAt: user.createdAt,
+				updatedAt: user.updatedAt,
 			},
 		});
 
@@ -45,8 +65,8 @@ export class PrismaUserRepository implements UserRepository {
 			userCreated.password,
 			userCreated.role,
 			userCreated.imgUrl,
-			userCreated.createAt,
-			userCreated.updateAt,
+			userCreated.createdAt,
+			userCreated.updatedAt,
 		);
 	}
 }

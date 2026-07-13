@@ -6,7 +6,7 @@ export class RefreshToken {
 		readonly refreshToken: string,
 		readonly userId: string,
 		readonly createdAt: Date,
-		readonly updateAt: Date,
+		readonly updatedAt: Date,
 	) {}
 
 	static create(hashRefreshToken: string, userId: string): RefreshToken {

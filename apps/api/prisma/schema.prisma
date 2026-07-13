@@ -14,8 +14,8 @@ model User {
   password String
   role Role
   imgUrl String?
-  createAt DateTime
-  updateAt DateTime
+  createdAt DateTime
+  updatedAt DateTime
   refreshTokens RefreshTokens[]
 }
 
@@ -28,8 +28,8 @@ model RefreshTokens {
   id String @id
   refreshToken String
   userId String
-  createAt DateTime
-  updateAt DateTime
+  createdAt DateTime
+  updatedAt DateTime
 
   user User @relation(fields: [userId], references: [id])
 }
