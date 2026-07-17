@@ -7,7 +7,6 @@ import fastify from 'fastify';
 import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 import { env } from './infra/config/env.js';
 import { LoginPlugin } from './infra/http/plugins/login-plugin.js';
-import { mePlugin } from './infra/http/plugins/me-plugin.js';
 import { RegisterPlugin } from './infra/http/plugins/register-plugin.js';
 
 function main() {
@@ -27,13 +26,19 @@ function main() {
 	});
 
 	app.register(jwt, {
-		secret: env.JWT_ACCESS_SECRET,
-		namespace: 'accessToken',
-	});
-
-	app.register(jwt, {
-		secret: env.JWT_REFRESH_SECRET,
-		namespace: 'refreshToken',
+		secret: env.JWT_SECRET,
+		messages: {
+			badRequestErrorMessage: 'O formato esperado é: Authorization: Bearer [token]',
+			badCookieRequestErrorMessage: 'Não foi possível interpretar o cookie da requisição.',
+			noAuthorizationInHeaderMessage: 'Nenhum cabeçalho Authorization foi encontrado na requisição.',
+			noAuthorizationInCookieMessage: 'Nenhum token de autorização foi encontrado nos cookies da requisição.',
+			authorizationTokenExpiredMessage: 'O token de autorização expirou.',
+			authorizationTokenUntrusted: 'O token de autorização não é confiável.',
+			authorizationTokenUnsigned: 'O token de autorização não está assinado.',
+			authorizationTokenInvalid: (err) => {
+				return `O token de autorização é inválido: ${err.message}`;
+			},
+		},
 		cookie: {
 			cookieName: 'refreshToken',
 			signed: true,
@@ -54,7 +59,6 @@ function main() {
 
 	app.register(RegisterPlugin);
 	app.register(LoginPlugin);
-	app.register(mePlugin);
 
 	app.register(ScalarApiReference, {
 		routePrefix: '/docs',

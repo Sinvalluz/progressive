@@ -16,22 +16,11 @@ model User {
   imgUrl String?
   createdAt DateTime
   updatedAt DateTime
-  refreshTokens RefreshTokens[]
 }
 
 model RegistrationToken {
   id String @id @default(uuid())
   token String
-}
-
-model RefreshTokens {
-  id String @id
-  refreshToken String
-  userId String
-  createdAt DateTime
-  updatedAt DateTime
-
-  user User @relation(fields: [userId], references: [id])
 }
 
 enum Role {

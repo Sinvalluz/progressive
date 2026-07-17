@@ -1,6 +1,5 @@
 import type { FastifyInstance } from 'fastify';
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
-import type { CreateRefreshToken } from '@/application/use-case/create-refresh-token.js';
 import type { RegisterUser } from '@/application/use-case/register-user.js';
 import { paths } from '@/infra/config/path.js';
 import { RegisterRequestSchema } from '../dto/register-request.js';
@@ -10,7 +9,6 @@ export class RegisterRoute {
 	constructor(
 		private readonly fastify: FastifyInstance,
 		private readonly RegisterUser: RegisterUser,
-		private readonly createRefreshToken: CreateRefreshToken,
 	) {}
 
 	execute() {
@@ -33,16 +31,7 @@ export class RegisterRoute {
 					registrationToken: body.registrationToken,
 				});
 
-				const accessToken = await reply.accessTokenJwtSign(
-					{
-						id: user.id,
-						email: user.email,
-						role: user.role,
-					},
-					{ expiresIn: '1h' },
-				);
-
-				const refreshToken = await reply.refreshTokenJwtSign(
+				const token = await reply.jwtSign(
 					{
 						id: user.id,
 						email: user.email,
@@ -51,10 +40,8 @@ export class RegisterRoute {
 					{ expiresIn: '7d' },
 				);
 
-				await this.createRefreshToken.execute({ userId: user.id, refreshToken });
-
 				return reply
-					.setCookie('refreshToken', refreshToken, {
+					.setCookie('token', token, {
 						path: '/',
 						secure: true,
 						httpOnly: true,
@@ -62,7 +49,7 @@ export class RegisterRoute {
 						sameSite: 'lax',
 					})
 					.code(201)
-					.send({ accessToken });
+					.send({});
 			},
 		});
 	}

@@ -1,5 +1,3 @@
 import z from 'zod';
 
-export const RegisterResponseSchema = z.object({
-	accessToken: z.string(),
-});
+export const RegisterResponseSchema = z.object({});
