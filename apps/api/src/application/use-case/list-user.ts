@@ -11,6 +11,7 @@ export type ListUserOutput = Omit<User, 'password'>;
 
 export class ListUser implements UseCase<ListUserInput, ListUserOutput> {
 	constructor(private readonly userRepository: UserRepository) {}
+
 	async execute(listUserInput: ListUserInput): Promise<ListUserOutput> {
 		const user = await this.userRepository.findById(listUserInput.id);
 

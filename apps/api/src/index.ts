@@ -7,6 +7,7 @@ import fastify from 'fastify';
 import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 import { env } from './infra/config/env.js';
 import { LoginPlugin } from './infra/http/plugins/login-plugin.js';
+import { mePlugin } from './infra/http/plugins/me-plugin.js';
 import { RegisterPlugin } from './infra/http/plugins/register-plugin.js';
 
 function main() {
@@ -40,7 +41,7 @@ function main() {
 			},
 		},
 		cookie: {
-			cookieName: 'refreshToken',
+			cookieName: 'token',
 			signed: true,
 		},
 	});
@@ -57,8 +58,10 @@ function main() {
 		transform: jsonSchemaTransform,
 	});
 
+	// Registro de rotas
 	app.register(RegisterPlugin);
 	app.register(LoginPlugin);
+	app.register(mePlugin);
 
 	app.register(ScalarApiReference, {
 		routePrefix: '/docs',
