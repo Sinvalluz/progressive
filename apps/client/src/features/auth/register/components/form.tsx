@@ -26,9 +26,8 @@ export default function RegisterForm() {
 
 	const registering = useMutation({
 		mutationFn: registerRequest,
-		onSuccess: (data) => {
+		onSuccess: () => {
 			navigate(paths.home.getHref());
-			console.log(data);
 		},
 		onError: (error: AxiosError) => {
 			console.error(error.response?.data);
@@ -37,7 +36,7 @@ export default function RegisterForm() {
 
 	function onSubmit(data: RegisterFormData) {
 		registering.mutate(data);
-		// form.reset();
+		form.reset();
 	}
 	return (
 		<form
@@ -88,7 +87,7 @@ export default function RegisterForm() {
 			{registering.isError && (
 				<p className='text-red-500 text-sm'>
 					{(registering.error as AxiosError<{ message: string }>)?.response?.data?.message ??
-						'Erro ao fazer login. Tente novamente.'}
+						'Erro ao fazer o cadastro. Tente novamente mais tarde.'}
 				</p>
 			)}
 

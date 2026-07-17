@@ -4,7 +4,7 @@ import type { AxiosError } from 'axios';
 import { useForm } from 'react-hook-form';
 import { useNavigate } from 'react-router';
 import { Button } from '@/components/ui/button';
-import { Checkbox } from '@/components/ui/checkbox';
+// import { Checkbox } from '@/components/ui/checkbox';
 import { Spinner } from '@/components/ui/spinner';
 import { paths } from '@/config/path';
 import HookFormController from '../../components/hook-form-controller';
@@ -24,9 +24,8 @@ export default function LoginForm() {
 
 	const registering = useMutation({
 		mutationFn: LoginRequest,
-		onSuccess: (data) => {
+		onSuccess: () => {
 			navigate(paths.home.getHref());
-			console.log(data);
 		},
 		onError: (error: AxiosError) => {
 			console.error(error.response?.data);
@@ -35,7 +34,7 @@ export default function LoginForm() {
 
 	function onSubmit(data: LoginFormData) {
 		registering.mutate(data);
-		// form.reset();
+		form.reset();
 	}
 	return (
 		<form
@@ -62,14 +61,15 @@ export default function LoginForm() {
 			{registering.isError && (
 				<p className='text-red-500 text-sm'>
 					{(registering.error as AxiosError<{ message: string }>)?.response?.data?.message ??
-						'Erro ao fazer login. Tente novamente.'}
+						'Erro ao fazer login. Tente novamente mais tarde.'}
 				</p>
 			)}
 
-			<div className='flex items-center gap-2.5'>
+			{/* Implementar depois */}
+			{/* <div className='flex items-center gap-2.5'>
 				<Checkbox className='border-border data-checked:border-highlights data-checked:bg-highlights data-checked:text-white	 dark:data-checked:bg-highlights' />
 				<p className='font-medium text-[16px]'>Mantenha-me conectado</p>
-			</div>
+			</div> */}
 
 			<Button
 				type='submit'
