@@ -15,4 +15,8 @@ export const paths = {
 				`/auth/signin${redirectTo ? `?redirectTo=${encodeURIComponent(redirectTo)}` : ''}`,
 		},
 	},
+	dashboard: {
+		path: '/dashboard',
+		getHref: () => '/dashboard',
+	},
 } as const;

@@ -1,8 +1,10 @@
 import { type QueryClient, useQueryClient } from '@tanstack/react-query';
 import { useMemo } from 'react';
-import { createBrowserRouter } from 'react-router';
+import { createBrowserRouter, Outlet } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
 import { paths } from '../src/config/path';
+import ProtectedRoute from './routes/protected-route';
+import PublicRoute from './routes/public-route';
 
 // biome-ignore lint/suspicious/noExplicitAny: <Config default bulletproof architecture>
 const convert = (queryClient: QueryClient) => (m: any) => {
@@ -18,24 +20,49 @@ const convert = (queryClient: QueryClient) => (m: any) => {
 export const createAppRouter = (queryClient: QueryClient) =>
 	createBrowserRouter([
 		{
-			path: paths.home.path,
-			lazy: () => import('./routes/home').then(convert(queryClient)),
+			element: (
+				<PublicRoute>
+					<Outlet />
+				</PublicRoute>
+			),
 			HydrateFallback: () => {},
+			children: [
+				{
+					path: paths.home.path,
+					lazy: () => import('./routes/home').then(convert(queryClient)),
+					HydrateFallback: () => {},
+				},
+				{
+					path: paths.auth.signUp.path,
+					lazy: () => import('./routes/auth/register').then(convert(queryClient)),
+					HydrateFallback: () => {},
+				},
+				{
+					path: paths.auth.signIn.path,
+					lazy: () => import('./routes/auth/login').then(convert(queryClient)),
+					HydrateFallback: () => {},
+				},
+			],
 		},
-		{
-			path: paths.auth.signUp.path,
-			lazy: () => import('./routes/auth/register').then(convert(queryClient)),
-			HydrateFallback: () => {},
-		},
-		{
-			path: paths.auth.signIn.path,
-			lazy: () => import('./routes/auth/login').then(convert(queryClient)),
-			HydrateFallback: () => {},
-		},
+
 		{
 			path: '*',
 			lazy: () => import('./routes/not-found').then(convert(queryClient)),
 			HydrateFallback: () => {},
+		},
+		{
+			element: (
+				<ProtectedRoute>
+					<Outlet />
+				</ProtectedRoute>
+			),
+			HydrateFallback: () => {},
+			children: [
+				{
+					path: paths.dashboard.path,
+					lazy: () => import('./routes/dashboard').then(convert(queryClient)),
+				},
+			],
 		},
 	]);
 

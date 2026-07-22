@@ -27,7 +27,7 @@ export default function RegisterForm() {
 	const registering = useMutation({
 		mutationFn: registerRequest,
 		onSuccess: () => {
-			navigate(paths.home.getHref());
+			navigate(paths.dashboard.getHref());
 		},
 		onError: (error: AxiosError) => {
 			console.error(error.response?.data);

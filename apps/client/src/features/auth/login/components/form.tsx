@@ -25,7 +25,7 @@ export default function LoginForm() {
 	const registering = useMutation({
 		mutationFn: LoginRequest,
 		onSuccess: () => {
-			navigate(paths.home.getHref());
+			navigate(paths.dashboard.getHref());
 		},
 		onError: (error: AxiosError) => {
 			console.error(error.response?.data);
