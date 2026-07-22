@@ -4,4 +4,5 @@ export const paths = {
 		login: '/auth/login',
 	},
 	me: '/me',
+	logout: '/logout'
 } as const;

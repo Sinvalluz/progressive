@@ -9,6 +9,7 @@ import { env } from './infra/config/env.js';
 import { LoginPlugin } from './infra/http/plugins/login-plugin.js';
 import { mePlugin } from './infra/http/plugins/me-plugin.js';
 import { RegisterPlugin } from './infra/http/plugins/register-plugin.js';
+import logoutPlugin from './infra/http/plugins/logout-plugin.js';
 
 function main() {
 	const app = fastify();
@@ -62,6 +63,7 @@ function main() {
 	app.register(RegisterPlugin);
 	app.register(LoginPlugin);
 	app.register(mePlugin);
+	app.register(logoutPlugin)
 
 	app.register(ScalarApiReference, {
 		routePrefix: '/docs',

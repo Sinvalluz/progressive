@@ -4,13 +4,16 @@ interface JwtPayload {
 	id: string;
 	email: string;
 	role: 'USER' | 'ADMIN';
-	iat: number;
-	exp: number;
+}
+
+interface JwtUser extends JwtPayload {
+  iat: number;
+  exp: number;
 }
 declare module '@fastify/jwt' {
 	interface FastifyJWT {
 		payload: JwtPayload;
-		user: JwtPayload;
+		user: JwtUser;
 	}
 }
 
