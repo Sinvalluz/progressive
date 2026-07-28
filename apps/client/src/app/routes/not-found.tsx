@@ -1,5 +1,5 @@
 import { Link } from 'react-router';
-import { paths } from '../../src/config/path';
+import { paths } from '@/config/path';
 
 export default function NotFoundRoute() {
 	return (

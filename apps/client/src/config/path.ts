@@ -19,4 +19,16 @@ export const paths = {
 		path: '/dashboard',
 		getHref: () => '/dashboard',
 	},
+	routines: {
+		path: '/routines',
+		getHref: () => '/routines',
+	},
+	exercises: {
+		path: '/exercises',
+		getHref: () => '/exercises',
+	},
+	profile: {
+		path: '/profile',
+		getHref: () => '/profile',
+	},
 } as const;

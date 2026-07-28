@@ -2,7 +2,8 @@ import { type QueryClient, useQueryClient } from '@tanstack/react-query';
 import { useMemo } from 'react';
 import { createBrowserRouter, Outlet } from 'react-router';
 import { RouterProvider } from 'react-router/dom';
-import { paths } from '../src/config/path';
+import AppLayout from '@/components/layout/app-layout';
+import { paths } from '@/config/path';
 import ProtectedRoute from './routes/protected-route';
 import PublicRoute from './routes/public-route';
 
@@ -53,7 +54,7 @@ export const createAppRouter = (queryClient: QueryClient) =>
 		{
 			element: (
 				<ProtectedRoute>
-					<Outlet />
+					<AppLayout />
 				</ProtectedRoute>
 			),
 			HydrateFallback: () => {},
@@ -61,6 +62,18 @@ export const createAppRouter = (queryClient: QueryClient) =>
 				{
 					path: paths.dashboard.path,
 					lazy: () => import('./routes/dashboard').then(convert(queryClient)),
+				},
+				{
+					path: paths.routines.path,
+					lazy: () => import('./routes/routines').then(convert(queryClient)),
+				},
+				{
+					path: paths.exercises.path,
+					lazy: () => import('./routes/exercises').then(convert(queryClient)),
+				},
+				{
+					path: paths.profile.path,
+					lazy: () => import('./routes/profile').then(convert(queryClient)),
 				},
 			],
 		},
