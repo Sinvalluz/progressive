@@ -7,8 +7,8 @@ interface JwtPayload {
 }
 
 interface JwtUser extends JwtPayload {
-  iat: number;
-  exp: number;
+	iat: number;
+	exp: number;
 }
 declare module '@fastify/jwt' {
 	interface FastifyJWT {
