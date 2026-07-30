@@ -19,6 +19,7 @@ export default function AppSidebarFooter({ collapsed }: AppSidebarFooterProps) {
 			className={cn(
 				'flex flex-row items-center border-t border-t-sidebar-border',
 				collapsed ? 'justify-center' : 'justify-between',
+				'hidden md:flex',
 			)}
 		>
 			<div className='flex items-center justify-center gap-1'>

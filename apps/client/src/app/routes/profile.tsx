@@ -1,11 +1,9 @@
-import { useAuth } from '@/providers/auth-provider';
+import Information from '@/features/profile/components/information';
 
 export default function ProfileRoute() {
-	const { user } = useAuth();
 	return (
-		<div>
-			<h1>Profile Route</h1>
-			<p>{user?.name}</p>
+		<div className='p-4 lg:p-8'>
+			<Information />
 		</div>
 	);
 }

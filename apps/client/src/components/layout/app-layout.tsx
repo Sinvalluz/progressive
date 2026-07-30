@@ -1,4 +1,5 @@
 import { Outlet } from 'react-router';
+import AppHeader from '../app-header';
 import AppSidebar from '../app-sidebar';
 import { SidebarProvider } from '../ui/sidebar';
 
@@ -6,9 +7,10 @@ export default function AppLayout() {
 	return (
 		<SidebarProvider>
 			<AppSidebar />
-			<main className='p-16'>
+			<div className='w-full'>
+				<AppHeader />
 				<Outlet />
-			</main>
+			</div>
 		</SidebarProvider>
 	);
 }
