@@ -23,8 +23,8 @@ export default function NavItem({ to, icon: Icon, name, collapsed }: NavItemProp
 							'[&_svg]:size-4 gap-2  cursor-pointer relative',
 							collapsed ? 'justify-center' : 'justify-baseline',
 							isActive &&
-								'after:absolute after:right-0 after:top-2 after:bottom-2 after:w-1 after:rounded-l-[8px] after:bg-red-500 after:shadow-[-1px_0_8px_0_#FF0004]',
-							'hover:bg-[#F5F5F5]',
+								'after:absolute after:right-0 after:top-2 after:bottom-2 after:w-1 after:rounded-l-[8px] bg-primary-hover after:bg-primary after:shadow-primary',
+							'hover:bg-primary-hover',
 						)}
 					>
 						<Icon />
