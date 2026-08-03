@@ -19,7 +19,7 @@ export default function Information() {
 					/>
 				) : (
 					<CircleUserRound
-						size={32}
+						size={150}
 						strokeWidth={1.5}
 						className='self-center'
 					/>

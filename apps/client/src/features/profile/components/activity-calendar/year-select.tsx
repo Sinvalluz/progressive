@@ -1,23 +1,26 @@
-import { useState } from 'react';
+import type { Dispatch, SetStateAction } from 'react';
 import { Button } from '@/components/ui/button';
 import { cn } from '@/lib/utils';
 
-const currentYear = new Date().getFullYear();
-const years = [currentYear];
+type YearSelectProps = {
+	currentYear: number;
+	yearSelected: number;
+	setYearSelected: Dispatch<SetStateAction<number>>;
+};
 
-for (let i = 1; i < 4; i++) {
-	years.push(currentYear - i);
-}
+export default function YearSelect({ currentYear, yearSelected, setYearSelected }: YearSelectProps) {
+	const years = [currentYear];
 
-export default function YearSelect() {
-	const [yearSelected, setYearSelected] = useState<number>(currentYear);
+	for (let i = 1; i < 4; i++) {
+		years.push(currentYear - i);
+	}
 	return (
 		<div className='flex flex-col gap-4'>
 			{years.map((year) => {
 				return (
 					<Button
 						className={cn(
-							'p-2 w-32 rounded-lg cursor-pointer',
+							'p-2 w-full rounded-lg cursor-pointer md:w-32',
 							year === yearSelected ? 'bg-primary' : 'bg-transparent text-foreground hover:text-white',
 						)}
 						key={year}

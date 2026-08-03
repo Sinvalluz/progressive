@@ -3,6 +3,7 @@ import { CircleUserRound, PanelRightClose } from 'lucide-react';
 import { NavLink, useNavigate } from 'react-router';
 import { paths } from '@/config/path';
 import { useAuth } from '@/providers/auth-provider';
+import { useTheme } from '@/providers/theme-provider';
 import logout from '@/services/logout';
 import {
 	DropdownMenu,
@@ -10,7 +11,11 @@ import {
 	DropdownMenuGroup,
 	DropdownMenuItem,
 	DropdownMenuLabel,
+	DropdownMenuPortal,
 	DropdownMenuSeparator,
+	DropdownMenuSub,
+	DropdownMenuSubContent,
+	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from './ui/dropdown-menu';
 import { useSidebar } from './ui/sidebar';
@@ -20,6 +25,7 @@ export default function AppHeader() {
 	const { user, setUser } = useAuth();
 	const queryClient = useQueryClient();
 	const navigate = useNavigate();
+	const { setTheme } = useTheme();
 	return (
 		<header className='flex w-full h-18 items-center justify-between border-b border-border bg-background px-4 md:hidden'>
 			<PanelRightClose
@@ -60,6 +66,15 @@ export default function AppHeader() {
 							<DropdownMenuItem>
 								<NavLink to={paths.profile.getHref()}>Configurações</NavLink>
 							</DropdownMenuItem>
+							<DropdownMenuSub>
+								<DropdownMenuSubTrigger>Trocar tema</DropdownMenuSubTrigger>
+								<DropdownMenuPortal>
+									<DropdownMenuSubContent>
+										<DropdownMenuItem onClick={() => setTheme('light')}>Claro</DropdownMenuItem>
+										<DropdownMenuItem onClick={() => setTheme('dark')}>Escuro</DropdownMenuItem>
+									</DropdownMenuSubContent>
+								</DropdownMenuPortal>
+							</DropdownMenuSub>
 							<DropdownMenuSeparator />
 							<DropdownMenuItem
 								onClick={async () => {

@@ -7,7 +7,7 @@ export default function AppLayout() {
 	return (
 		<SidebarProvider>
 			<AppSidebar />
-			<div className='w-full'>
+			<div className='flex-1 min-w-0'>
 				<AppHeader />
 				<Outlet />
 			</div>
