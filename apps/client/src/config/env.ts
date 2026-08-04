@@ -2,7 +2,7 @@ import z from 'zod';
 
 const createEnv = () => {
 	const EnvSchema = z.object({
-		API_URL: z.string(),
+		API_URL: z.url().nonempty(),
 	});
 
 	const envVars = Object.entries(import.meta.env).reduce<Record<string, string>>((acc, curr) => {
@@ -19,8 +19,8 @@ const createEnv = () => {
 		throw new Error(
 			`Invalid env provided.
 The following variables are missing or invalid:
-${Object.entries(z.treeifyError(parsedEnv.error))
-	.map(([k, v]) => `- ${k}: ${v}`)
+${Object.entries(z.treeifyError(parsedEnv.error).properties ?? {})
+	.map(([key, value]) => `- ${key}: ${value.errors.join(',')}`)
 	.join('\n')}
 `,
 		);
