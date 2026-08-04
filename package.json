@@ -9,7 +9,13 @@
 		"preview:client": "pnpm --filter @progressive/client preview",
 		"dev:api": "pnpm --filter @progressive/api dev",
 		"build:api": "pnpm --filter @progressive/api build",
-		"start:api": "pnpm --filter @progressive/client start"
+		"start:api": "pnpm --filter @progressive/client start",
+		"prepare": "husky"
+	},
+	"lint-staged": {
+		"*": [
+			"biome check --write "
+		]
 	},
 	"keywords": [],
 	"author": "",
@@ -23,6 +29,8 @@
 	},
 	"type": "module",
 	"devDependencies": {
-		"@biomejs/biome": "2.5.3"
+		"@biomejs/biome": "2.5.3",
+		"husky": "^9.1.7",
+		"lint-staged": "^17.3.0"
 	}
 }
