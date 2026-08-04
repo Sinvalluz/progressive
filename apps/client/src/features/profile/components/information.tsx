@@ -6,7 +6,7 @@ import { useAuth } from '@/providers/auth-provider';
 export default function Information() {
 	const { user } = useAuth();
 	return (
-		<section className='p-4 border border-border rounded-lg flex flex-col gap-2 justify-between md:flex-row md:items-center'>
+		<section className='p-4 border border-border rounded-lg flex flex-col gap-2 justify-between md:flex-row md:items-center shadow-[0_4px_8px_rgba(0,0,0,0.25)]'>
 			<div className='flex flex-col gap-4 items-start md:flex-row md:gap-2.5'>
 				{user?.imgUrl ? (
 					<img

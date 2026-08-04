@@ -12,7 +12,7 @@ export default function ActivityCalendar() {
 	const [yearSelected, setYearSelected] = useState<number>(currentYear);
 
 	return (
-		<section className='p-4 flex flex-col border border-border rounded-lg gap-4 md:flex-row'>
+		<section className='p-4 flex flex-col border border-border rounded-lg gap-4 md:flex-row shadow-[0_4px_8px_rgba(0,0,0,0.25)]'>
 			<div className='flex-1 min-w-0 space-y-2.5'>
 				<h2 className='flex gap-1 font-semibold'>
 					<Activity />
