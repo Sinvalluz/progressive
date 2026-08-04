@@ -1,5 +1,6 @@
 import ActivityCalendar from '@/features/profile/components/activity-calendar';
 import Information from '@/features/profile/components/information';
+import RecordsCard from '@/features/profile/components/records-card';
 import WorkoutCard from '@/features/profile/components/workout-card';
 
 const exercises = [
@@ -37,24 +38,38 @@ export default function ProfileRoute() {
 		<div className='p-4 lg:p-8 space-y-4'>
 			<Information />
 			<ActivityCalendar />
-			<WorkoutCard
-				title='Push'
-				date={new Date()}
-				duration='35 min'
-				volume='4000kg'
-				records='4'
-				muscleGroups='Peito, ombros e triceps'
-				exercises={exercises}
-			/>
-			<WorkoutCard
-				title='Push'
-				date={new Date()}
-				duration='35 min'
-				volume='4000kg'
-				records='4'
-				muscleGroups='Peito, ombros e triceps'
-				exercises={exercises}
-			/>
+			<div className='flex flex-col md:flex-row gap-2.5 md:items-start'>
+				<div className='flex-1 order-2 md:order-1 space-y-2.5'>
+					<WorkoutCard
+						title='Push'
+						date={new Date()}
+						duration='35 min'
+						volume='4000kg'
+						records='4'
+						muscleGroups='Peito, ombros e triceps'
+						exercises={exercises}
+					/>
+					<WorkoutCard
+						title='Push'
+						date={new Date()}
+						duration='35 min'
+						volume='4000kg'
+						records='4'
+						muscleGroups='Peito, ombros e triceps'
+						exercises={exercises}
+					/>
+					<WorkoutCard
+						title='Push'
+						date={new Date()}
+						duration='35 min'
+						volume='4000kg'
+						records='4'
+						muscleGroups='Peito, ombros e triceps'
+						exercises={exercises}
+					/>
+				</div>
+				<RecordsCard />
+			</div>
 		</div>
 	);
 }
