@@ -6,6 +6,7 @@ import ScalarApiReference from '@scalar/fastify-api-reference';
 import fastify from 'fastify';
 import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
 import { env } from './infra/config/env.js';
+import equipmentPlugin from './infra/http/plugins/equipment-plugin.js';
 import { LoginPlugin } from './infra/http/plugins/login-plugin.js';
 import logoutPlugin from './infra/http/plugins/logout-plugin.js';
 import { mePlugin } from './infra/http/plugins/me-plugin.js';
@@ -64,6 +65,7 @@ function main() {
 	app.register(LoginPlugin);
 	app.register(mePlugin);
 	app.register(logoutPlugin);
+	app.register(equipmentPlugin);
 
 	app.register(ScalarApiReference, {
 		routePrefix: '/docs',

@@ -23,6 +23,13 @@ model RegistrationToken {
   token String
 }
 
+model Equipment {
+  id String @id @default(uuid())
+  name String @unique
+  createdAt DateTime
+  updatedAt DateTime
+}
+
 enum Role {
   USER
   ADMIN

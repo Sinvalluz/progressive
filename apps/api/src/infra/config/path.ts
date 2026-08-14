@@ -5,4 +5,7 @@ export const paths = {
 	},
 	me: '/me',
 	logout: '/logout',
+	equipment: {
+		create: '/equipment',
+	},
 } as const;
