@@ -1,7 +1,5 @@
-import { AppError } from './app-error.js';
-
-export class EquipmentAlreadyExists extends AppError {
-	constructor(readonly statusCode = 409) {
-		super(statusCode, 'O equipamento informado já existe. Tente outro equipamento.');
+export class EquipmentAlreadyExists extends Error {
+	constructor(readonly message: string = 'O equipamento informado já existe. Tente outro equipamento.') {
+		super(message);
 	}
 }

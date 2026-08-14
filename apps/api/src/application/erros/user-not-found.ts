@@ -1,7 +1,5 @@
-import { AppError } from './app-error.js';
-
-export class UserNotFound extends AppError {
-	constructor(readonly statusCode: number = 404) {
-		super(statusCode, 'O Usuário não foi encontrado');
+export class UserNotFound extends Error {
+	constructor(readonly message: string = 'O Usuário não foi encontrado') {
+		super(message);
 	}
 }
