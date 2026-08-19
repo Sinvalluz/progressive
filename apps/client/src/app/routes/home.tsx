@@ -7,7 +7,7 @@ export default function HomeRoute() {
 	return (
 		<>
 			<AppSidebar />
-			<div className='min-h-screen w-full relative space-y-16'>
+			<div className='min-h-screen flex-1 min-w-0 relative space-y-16'>
 				<HomeHeader />
 				<HomeMain />
 				<HomeFooter />
