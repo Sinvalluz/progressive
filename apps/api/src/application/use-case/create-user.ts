@@ -1,3 +1,4 @@
+import { randomUUID } from 'node:crypto';
 import { EmailIsAlreadyInUse } from '@/application/erros/email-is-already-in-use.js';
 import type { HashPasswordGateway } from '@/application/gateway/hash-password-gateway.js';
 import { User } from '@/domain/user/user.js';
@@ -29,7 +30,16 @@ export class CreateUser implements UseCase<CreateUserInput, CreateUserOutput> {
 		const hashedPassword = await this.hashPasswordGateway.hash(createUserInput.password);
 
 		const user = await this.userRepository.create(
-			User.create(createUserInput.email, createUserInput.name, hashedPassword),
+			new User(
+				randomUUID(),
+				createUserInput.email,
+				createUserInput.name,
+				hashedPassword,
+				'USER',
+				null,
+				new Date(),
+				new Date(),
+			),
 		);
 
 		return {

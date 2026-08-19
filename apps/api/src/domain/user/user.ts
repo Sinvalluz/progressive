@@ -1,5 +1,3 @@
-import { randomUUID } from 'node:crypto';
-
 export class User {
 	constructor(
 		readonly id: string,
@@ -11,8 +9,4 @@ export class User {
 		readonly createdAt: Date,
 		readonly updatedAt: Date,
 	) {}
-
-	static create(email: string, name: string, password: string): User {
-		return new User(randomUUID(), email, name, password, 'USER', null, new Date(), new Date());
-	}
 }
