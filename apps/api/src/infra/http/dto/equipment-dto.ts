@@ -10,3 +10,7 @@ export const EquipmentResponseDto = z.object({
 	createdAt: z.date(),
 	updatedAt: z.date(),
 });
+
+export const EquipmentUpdateDto = z.object({
+	name: z.string('O nome precisa ser uma string').min(1, 'O nome é obrigatório'),
+});

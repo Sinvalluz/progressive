@@ -1,5 +1,7 @@
-export class InvalidCredentialsError extends Error {
-	constructor(readonly message: string = 'Credenciais inválidas, tente novamente') {
-		super(message);
+import AppError from './app-error.js';
+
+export class InvalidCredentialsError extends AppError {
+	constructor() {
+		super(409, 'Credenciais inválidas, tente novamente');
 	}
 }

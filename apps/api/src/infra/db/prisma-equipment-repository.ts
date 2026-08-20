@@ -5,8 +5,22 @@ import type { PrismaClient } from '../../../generated/prisma/client.js';
 export default class PrismaEquipmentRepository implements EquipmentRepository {
 	constructor(private readonly prismaClient: PrismaClient) {}
 
+	async findAll(): Promise<Equipment[]> {
+		return await this.prismaClient.equipment.findMany();
+	}
+
+	async update(equipment: Equipment): Promise<Equipment> {
+		return await this.prismaClient.equipment.update({
+			where: { id: equipment.id },
+			data: {
+				name: equipment.name,
+				updatedAt: equipment.updatedAt,
+			},
+		});
+	}
+
 	async create(equipment: Equipment): Promise<Equipment> {
-		return this.prismaClient.equipment.create({
+		return await this.prismaClient.equipment.create({
 			data: {
 				id: equipment.id,
 				name: equipment.name,
@@ -15,8 +29,9 @@ export default class PrismaEquipmentRepository implements EquipmentRepository {
 			},
 		});
 	}
+
 	async findById(id: string): Promise<Equipment | null> {
-		return this.prismaClient.equipment.findUnique({
+		return await this.prismaClient.equipment.findUnique({
 			where: {
 				id,
 			},
@@ -24,12 +39,13 @@ export default class PrismaEquipmentRepository implements EquipmentRepository {
 	}
 
 	async findByName(name: string): Promise<Equipment | null> {
-		return this.prismaClient.equipment.findUnique({
+		return await this.prismaClient.equipment.findUnique({
 			where: {
 				name,
 			},
 		});
 	}
+
 	async delete(id: string): Promise<void> {
 		await this.prismaClient.equipment.delete({
 			where: {

@@ -1,5 +1,7 @@
-export class EquipmentAlreadyExists extends Error {
-	constructor(readonly message: string = 'O equipamento informado já existe. Tente outro equipamento.') {
-		super(message);
+import AppError from './app-error.js';
+
+export class EquipmentAlreadyExists extends AppError {
+	constructor() {
+		super(409, 'O equipamento informado já existe. Tente outro equipamento.');
 	}
 }

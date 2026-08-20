@@ -4,7 +4,14 @@ import jwt from '@fastify/jwt';
 import fastifySwagger from '@fastify/swagger';
 import ScalarApiReference from '@scalar/fastify-api-reference';
 import fastify from 'fastify';
-import { jsonSchemaTransform, serializerCompiler, validatorCompiler } from 'fastify-type-provider-zod';
+import {
+	jsonSchemaTransform,
+	serializerCompiler,
+	validatorCompiler,
+	type ZodTypeProvider,
+} from 'fastify-type-provider-zod';
+import { ZodError } from 'zod';
+import AppError from './application/erros/app-error.js';
 import { env } from './infra/config/env.js';
 import equipmentPlugin from './infra/http/plugins/equipment-plugin.js';
 import { LoginPlugin } from './infra/http/plugins/login-plugin.js';
@@ -13,7 +20,7 @@ import { mePlugin } from './infra/http/plugins/me-plugin.js';
 import { RegisterPlugin } from './infra/http/plugins/register-plugin.js';
 
 function main() {
-	const app = fastify();
+	const app = fastify().withTypeProvider<ZodTypeProvider>();
 
 	app.setValidatorCompiler(validatorCompiler);
 	app.setSerializerCompiler(serializerCompiler);
@@ -58,6 +65,30 @@ function main() {
 			servers: [],
 		},
 		transform: jsonSchemaTransform,
+	});
+
+	app.setErrorHandler((error, _, reply) => {
+		if (error instanceof AppError) {
+			return reply.code(error.statusCode).send({
+				message: error.message,
+			});
+		}
+
+		if (error instanceof ZodError) {
+			return reply.code(400).send({
+				message: 'Erro de validação',
+				errors: error.issues.map((issue) => ({
+					field: issue.path.join('.'),
+					message: issue.message,
+				})),
+			});
+		}
+
+		console.error(error);
+
+		return reply.code(500).send({
+			message: 'Erro interno do servidor',
+		});
 	});
 
 	// Registro de rotas

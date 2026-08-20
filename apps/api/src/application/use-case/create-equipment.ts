@@ -11,13 +11,13 @@ export default class CreateEquipment implements UseCase<CreateEquipmentInput, Cr
 	constructor(private readonly equipmentRepository: EquipmentRepository) {}
 
 	async execute(createEquipmentInput: CreateEquipmentInput): Promise<CreateEquipmentOutput> {
-		const equipmentExists = await this.equipmentRepository.findByName(createEquipmentInput.name);
+		const equipmentExists = await this.equipmentRepository.findByName(createEquipmentInput.name.toLowerCase());
 
 		if (equipmentExists) {
 			throw new EquipmentAlreadyExists();
 		}
 
-		const equipment = new Equipment(randomUUID(), createEquipmentInput.name, new Date(), new Date());
+		const equipment = new Equipment(randomUUID(), createEquipmentInput.name.toLowerCase(), new Date(), new Date());
 
 		return await this.equipmentRepository.create(equipment);
 	}

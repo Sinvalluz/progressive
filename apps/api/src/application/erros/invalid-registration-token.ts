@@ -1,5 +1,7 @@
-export class InvalidRegistrationToken extends Error {
-	constructor(readonly message: string = 'O token de registro está inválido, tente novamente com o token correto') {
-		super(message);
+import AppError from './app-error.js';
+
+export class InvalidRegistrationToken extends AppError {
+	constructor() {
+		super(401, 'O token de registro está inválido, tente novamente com o token correto');
 	}
 }
