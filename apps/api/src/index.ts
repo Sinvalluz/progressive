@@ -3,7 +3,7 @@ import { fastifyCors } from '@fastify/cors';
 import jwt from '@fastify/jwt';
 import fastifySwagger from '@fastify/swagger';
 import ScalarApiReference from '@scalar/fastify-api-reference';
-import fastify from 'fastify';
+import fastify, { type FastifyError } from 'fastify';
 import {
 	jsonSchemaTransform,
 	serializerCompiler,
@@ -17,6 +17,7 @@ import equipmentPlugin from './infra/http/plugins/equipment-plugin.js';
 import { LoginPlugin } from './infra/http/plugins/login-plugin.js';
 import logoutPlugin from './infra/http/plugins/logout-plugin.js';
 import { mePlugin } from './infra/http/plugins/me-plugin.js';
+import muscleGroupPlugin from './infra/http/plugins/muscle-group-plugin.js';
 import { RegisterPlugin } from './infra/http/plugins/register-plugin.js';
 
 function main() {
@@ -67,7 +68,7 @@ function main() {
 		transform: jsonSchemaTransform,
 	});
 
-	app.setErrorHandler((error, _, reply) => {
+	app.setErrorHandler((error: FastifyError, _, reply) => {
 		if (error instanceof AppError) {
 			return reply.code(error.statusCode).send({
 				message: error.message,
@@ -84,6 +85,12 @@ function main() {
 			});
 		}
 
+		if (error.code?.startsWith('FST_')) {
+			return reply.code(400).send({
+				message: error.message,
+			});
+		}
+
 		console.error(error);
 
 		return reply.code(500).send({
@@ -97,6 +104,7 @@ function main() {
 	app.register(mePlugin);
 	app.register(logoutPlugin);
 	app.register(equipmentPlugin);
+	app.register(muscleGroupPlugin);
 
 	app.register(ScalarApiReference, {
 		routePrefix: '/docs',

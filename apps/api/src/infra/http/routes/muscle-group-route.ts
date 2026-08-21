@@ -1,39 +1,39 @@
 import type { FastifyInstance } from 'fastify';
 import type { ZodTypeProvider } from 'fastify-type-provider-zod';
 import z from 'zod';
-import type CreateEquipment from '@/application/use-case/create-equipment.js';
-import type DeleteEquipment from '@/application/use-case/delete-equipment.js';
-import type ListAllEquipments from '@/application/use-case/list-all-equipments.js';
-import type UpdateEquipment from '@/application/use-case/update-equipment.js';
+import type CreateMuscleGroup from '@/application/use-case/create-muscle-group.js';
+import type DeleteMuscleGroup from '@/application/use-case/delete-muscle-group.js';
+import type ListAllMuscleGroups from '@/application/use-case/list-all-muscle-groups.js';
+import type UpdateMuscleGroup from '@/application/use-case/update-muscle-group.js';
 import { paths } from '@/infra/config/path.js';
 import { adminVerify } from '../decorators/admin-verify.js';
 import { jwtVerify } from '../decorators/jwt-verify.js';
-import { EquipmentCreateDto, EquipmentResponseDto, EquipmentUpdateDto } from '../dto/equipment-dto.js';
+import { MuscleGroupCreateDto, MuscleGroupResponseDto, MuscleGroupUpdateDto } from '../dto/muscle-group-dto.js';
 
-export default class EquipmentRoute {
+export default class MuscleGroupRoute {
 	constructor(
 		private readonly fastify: FastifyInstance,
-		private readonly createEquipment: CreateEquipment,
-		private readonly listAllEquipment: ListAllEquipments,
-		private readonly updateEquipment: UpdateEquipment,
-		private readonly deleteEquipment: DeleteEquipment,
+		private readonly createMuscleGroup: CreateMuscleGroup,
+		private readonly listAllMuscleGroup: ListAllMuscleGroups,
+		private readonly updateMuscleGroup: UpdateMuscleGroup,
+		private readonly deleteMuscleGroup: DeleteMuscleGroup,
 	) {}
 
 	async create() {
 		this.fastify.withTypeProvider<ZodTypeProvider>().route({
 			method: 'POST',
-			url: paths.equipment,
+			url: paths.muscleGroup,
 			schema: {
-				body: EquipmentCreateDto,
+				body: MuscleGroupCreateDto,
 				response: {
-					201: EquipmentResponseDto,
+					201: MuscleGroupResponseDto,
 				},
 			},
 			preHandler: [jwtVerify, adminVerify],
 			handler: async (request, reply) => {
 				const { body } = request;
 
-				const { id, name, createdAt, updatedAt } = await this.createEquipment.execute({
+				const { id, name, createdAt, updatedAt } = await this.createMuscleGroup.execute({
 					name: body.name,
 				});
 
@@ -45,15 +45,15 @@ export default class EquipmentRoute {
 	async listALL() {
 		this.fastify.withTypeProvider<ZodTypeProvider>().route({
 			method: 'GET',
-			url: paths.equipment,
+			url: paths.muscleGroup,
 			schema: {
 				response: {
-					200: EquipmentResponseDto.array(),
+					200: MuscleGroupResponseDto.array(),
 				},
 			},
 			preHandler: [jwtVerify],
 			handler: async (_, reply) => {
-				const equipments = await this.listAllEquipment.execute();
+				const equipments = await this.listAllMuscleGroup.execute();
 
 				return reply.code(200).send(equipments);
 			},
@@ -63,23 +63,24 @@ export default class EquipmentRoute {
 	async update() {
 		this.fastify.withTypeProvider<ZodTypeProvider>().route({
 			method: 'PUT',
-			url: `${paths.equipment}/:id`,
+			url: `${paths.muscleGroup}/:id`,
 			schema: {
 				params: z.object({
 					id: z.uuid('O id como parâmetro é obrigatório ou está incorreto'),
 				}),
-				body: EquipmentUpdateDto,
+				body: MuscleGroupUpdateDto,
 				response: {
 					204: z.object({ message: z.string() }),
 				},
 			},
 			preHandler: [jwtVerify, adminVerify],
 			handler: async (request, reply) => {
+				console.log(request.params);
 				const { body, params } = request;
 
-				await this.updateEquipment.execute({ id: params.id, name: body.name });
+				await this.updateMuscleGroup.execute({ id: params.id, name: body.name });
 
-				return reply.code(204).send({ message: 'Equipamento atualizado com sucesso' });
+				return reply.code(204).send({ message: 'Grupo muscular atualizado com sucesso' });
 			},
 		});
 	}
@@ -87,7 +88,7 @@ export default class EquipmentRoute {
 	async delete() {
 		this.fastify.withTypeProvider<ZodTypeProvider>().route({
 			method: 'DELETE',
-			url: `${paths.equipment}/:id`,
+			url: `${paths.muscleGroup}/:id`,
 			schema: {
 				params: z.object({
 					id: z.uuid('O id como parâmetro é obrigatório ou está incorreto'),
@@ -100,9 +101,9 @@ export default class EquipmentRoute {
 			handler: async (request, reply) => {
 				const { params } = request;
 
-				await this.deleteEquipment.execute({ id: params.id });
+				await this.deleteMuscleGroup.execute({ id: params.id });
 
-				return reply.code(204).send({ message: 'Equipamento deletado com sucesso' });
+				return reply.code(204).send({ message: 'Grupo muscular deletado com sucesso' });
 			},
 		});
 	}

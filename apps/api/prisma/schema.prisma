@@ -16,11 +16,15 @@ model User {
   imgUrl String?
   createdAt DateTime
   updatedAt DateTime
+
+  @@map("users")
 }
 
 model RegistrationToken {
   id String @id @db.Uuid
   token String
+
+  @@map("registration_tokens")
 }
 
 model Equipment {
@@ -28,6 +32,17 @@ model Equipment {
   name String @unique
   createdAt DateTime
   updatedAt DateTime
+
+  @@map("equipments")
+}
+
+model MuscleGroup {
+  id String @id @db.Uuid
+  name String @unique
+  createdAt DateTime
+  updatedAt DateTime
+
+  @@map("muscle_groups")
 }
 
 enum Role {
